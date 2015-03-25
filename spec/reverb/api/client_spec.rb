@@ -4,7 +4,7 @@ describe Reverb::Api::Client, vcr: true do
   let(:client) do
     described_class.new(
       basic_auth: basic_auth,
-      reverb_token: reverb_token, 
+      reverb_token: reverb_token,
       url: url
     )
   end
@@ -37,11 +37,24 @@ describe Reverb::Api::Client, vcr: true do
     end
   end
 
-  describe "#find_listing_by_sku" do
-    let(:listing) { client.find_listing_by_sku("ASKU")["listings"][0] }
+  describe "#find_listing_by_sku", vcr: { cassette_name: "find_listing_by_sku" } do
+    let(:listing) { client.find_listing_by_sku("ASKU") }
+
     it "finds the correct item" do
       listing["make"].should == "Fender"
       listing["model"].should == "Stratocaster"
+    end
+  end
+
+  describe "updating listing", vcr: { cassette_name: "update_listing" } do
+    let(:listing) { client.find_listing_by_sku("ASKU") }
+
+    it "updates" do
+      client.put(listing["_links"]["self"]["href"], { title: "hello world" })
+
+      # This test can fail because there is an undefined amount of time before
+      # the update above is represented in the search below (due to ElasticSearch)
+      client.find_listing_by_sku("ASKU")["title"].should == "hello world"
     end
   end
 end

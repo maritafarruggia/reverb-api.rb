@@ -32,3 +32,9 @@ Examples:
 
     client.create_listing make: "Fender", model: "Precision Bass", sku: "THE_SKU"
     client.find_listing_by_sku "THE_SKU"
+
+## Testing
+
+The tests make real requests against Reverb's sandbox server which requires secret
+usernames and passwords. As a result, you will likely not be able to run them locally.
+Sorry.
