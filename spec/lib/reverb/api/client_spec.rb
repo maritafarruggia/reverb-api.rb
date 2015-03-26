@@ -41,8 +41,8 @@ describe Reverb::Api::Client, vcr: true do
     let(:listing) { client.find_listing_by_sku("ASKU") }
 
     it "finds the correct item" do
-      listing["make"].should == "Fender"
-      listing["model"].should == "Stratocaster"
+      listing.make.should == "Fender"
+      listing.model.should == "Stratocaster"
     end
   end
 
@@ -50,11 +50,11 @@ describe Reverb::Api::Client, vcr: true do
     let(:listing) { client.find_listing_by_sku("ASKU") }
 
     it "updates" do
-      client.put(listing["_links"]["self"]["href"], { title: "hello world" })
+      listing.update(title: "new title")
 
       # This test can fail because there is an undefined amount of time before
       # the update above is represented in the search below (due to ElasticSearch)
-      client.find_listing_by_sku("ASKU")["title"].should == "hello world"
+      client.find_listing_by_sku("ASKU").title.should == "new title"
     end
   end
 end
