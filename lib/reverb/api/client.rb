@@ -25,7 +25,7 @@ module Reverb
       end
 
       def find_listing_by_sku(sku)
-        get("/api/my/listings?sku=#{URI.encode(sku)}&state=all")["listings"].first
+        Listing.new(client: self, listing_attributes: get("/api/my/listings?sku=#{URI.encode(sku)}&state=all")["listings"].first)
       end
 
       def post(path, params)
