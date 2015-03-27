@@ -38,11 +38,22 @@ describe Reverb::Api::Client, vcr: true do
   end
 
   describe "#find_listing_by_sku", vcr: { cassette_name: "find_listing_by_sku" } do
-    let(:listing) { client.find_listing_by_sku("ASKU") }
 
-    it "finds the correct item" do
-      listing.make.should == "Fender"
-      listing.model.should == "Stratocaster"
+    context "the sku is found on reverb" do
+      let(:listing) { client.find_listing_by_sku("ASKU") }
+
+      it "finds the correct item" do
+        listing.make.should == "Fender"
+        listing.model.should == "Stratocaster"
+      end
+    end
+
+    context "the sku is not found on reverb" do
+      let(:listing) { client.find_listing_by_sku("NOSKU") }
+
+      it "is nil" do
+        listing.should === nil
+      end
     end
   end
 
