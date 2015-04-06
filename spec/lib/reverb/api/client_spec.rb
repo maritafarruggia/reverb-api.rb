@@ -22,11 +22,24 @@ describe Reverb::Api::Client, vcr: true do
   let(:url) { "https://sandbox.reverb.com" }
 
   context "with invalid authentication", vcr: { cassette_name: "wrong_auth"} do
-    let(:basic_auth) { { username: "WRONG", password: "WRONG" } }
+    
+    context "bad basic auth" do
+      let(:basic_auth) { { username: "WRONG", password: "WRONG" } }
 
-    it "raises a NotAuthorizedError" do
-      expect { client.find_listing_by_sku("ASKU") }
-        .to raise_error Reverb::Api::NotAuthorizedError, "You must re-authorize with Reverb"
+      it "raises a NotAuthorizedError" do
+        expect { client.find_listing_by_sku("ASKU") }
+          .to raise_error Reverb::Api::NotAuthorizedError, "Reverb authorization failed. Please check your X-Auth-Token header."
+      end
+    end
+
+    context "bad api token" do
+      let(:reverb_token) { "bad_token" }
+
+      it "raises a NotAuthorizedError" do
+        expect { client.find_listing_by_sku("ASKU") }
+          .to raise_error Reverb::Api::NotAuthorizedError, "Please log in to view your listings."
+      end
+
     end
   end
 

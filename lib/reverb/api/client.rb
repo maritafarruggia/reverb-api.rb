@@ -66,7 +66,7 @@ module Reverb
       end
 
       def handle_response(response)
-        raise Reverb::Api::NotAuthorizedError, "You must re-authorize with Reverb" unless authorized?(response)
+        raise Reverb::Api::NotAuthorizedError.new(response) unless authorized?(response)
         response
       end
 
