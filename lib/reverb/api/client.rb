@@ -34,19 +34,19 @@ module Reverb
       end
 
       def post(path, params)
-        HTTParty.post(url(path), with_defaults(params))
+        handle_response HTTParty.post(url(path), with_defaults(params))
       end
 
       def get(path)
-        HTTParty.get(url(path), default_options)
+        handle_response HTTParty.get(url(path), default_options)
       end
 
       def put(path, params)
-        HTTParty.put(url(path), with_defaults(params))
+        handle_response HTTParty.put(url(path), with_defaults(params))
       end
 
       def delete(path, params)
-        HTTParty.delete(url(path), with_defaults(params))
+        handle_response HTTParty.delete(url(path), with_defaults(params))
       end
 
       private
@@ -63,6 +63,15 @@ module Reverb
 
       def url(path)
         File.join(reverb_url, path)
+      end
+
+      def handle_response(response)
+        raise Reverb::Api::NotAuthorizedError.new(response) unless authorized?(response)
+        response
+      end
+
+      def authorized?(response)
+        !(response.code == 401 || response.code == 403)
       end
 
       # Tells HTTParty to parse application/hal+json as json
