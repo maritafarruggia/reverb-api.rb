@@ -33,6 +33,14 @@ module Reverb
         end
       end
 
+      def create_webhook(url:, topic:)
+        post("/api/webhooks/registrations", url: url, topic: topic)
+      end
+
+      def webhooks
+        get("/api/webhooks/registrations")
+      end
+
       def post(path, params)
         handle_response HTTParty.post(url(path), with_defaults(params))
       end

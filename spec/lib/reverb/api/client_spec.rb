@@ -22,7 +22,7 @@ describe Reverb::Api::Client, vcr: true do
   let(:url) { "https://sandbox.reverb.com" }
 
   context "with invalid authentication", vcr: { cassette_name: "wrong_auth"} do
-    
+
     context "bad basic auth" do
       let(:basic_auth) { { username: "WRONG", password: "WRONG" } }
 
@@ -90,6 +90,22 @@ describe Reverb::Api::Client, vcr: true do
         # This test can fail because there is an undefined amount of time before
         # the update above is represented in the search below (due to ElasticSearch)
         client.find_listing_by_sku("ASKU").title.should == "new title"
+      end
+    end
+
+    describe "#create_webhook", vcr: { cassette_name: "create_webhook" } do
+      specify do
+        client.create_webhook(url: "http://requestb.in/1etnuhm1", topic: "listings/update")
+          .code.should == 201
+      end
+    end
+
+    describe "#webhooks", vcr: { cassette_name: "get_webhooks" } do
+      subject(:registered_webhook) { client.webhooks["registrations"].first }
+
+      it "gets registered webhooks" do
+        subject["url"].should == "http://requestb.in/1etnuhm1"
+        subject["topic"].should == "listings/update"
       end
     end
   end
