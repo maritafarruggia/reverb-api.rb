@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Reverb API Client}
   spec.description   = %q{Access the Reverb API}
-  spec.homepage      = "https://github.com/reverbdev/reverb-api.rb"
+  spec.homepage      = "https://github.com/reverbdotcom/reverb-api.rb"
   spec.license       = "Apache License Version 2.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
