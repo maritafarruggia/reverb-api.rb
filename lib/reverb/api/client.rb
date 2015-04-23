@@ -25,12 +25,11 @@ module Reverb
       end
 
       def find_listing_by_sku(sku)
-        listing_attributes =  get("/api/my/listings?sku=#{URI.encode(sku)}&state=all")["listings"].first
-        if listing_attributes
-          Listing.new(client: self, listing_attributes: listing_attributes)
-        else
-          nil
-        end
+        find_by_sku(sku, "all")
+      end
+
+      def find_draft(sku)
+        find_by_sku(sku, "draft")
       end
 
       def create_webhook(url:, topic:)
@@ -60,6 +59,15 @@ module Reverb
       private
 
       attr_reader :basic_auth, :reverb_token, :reverb_url
+
+      def find_by_sku(sku, state)
+        listing_attributes =  get("/api/my/listings?sku=#{URI.encode(sku)}&state=#{state}")["listings"].first
+        if listing_attributes
+          Listing.new(client: self, listing_attributes: listing_attributes)
+        else
+          nil
+        end
+      end
 
       def with_defaults(params={})
         unless params.empty?

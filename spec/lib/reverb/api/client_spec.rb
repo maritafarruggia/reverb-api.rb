@@ -21,13 +21,13 @@ describe Reverb::Api::Client, vcr: true do
   let(:reverb_token) { ENV["REVERB_TEST_API_TOKEN"] }
   let(:url) { "https://sandbox.reverb.com" }
 
-  context "with invalid authentication", vcr: { cassette_name: "wrong_auth"} do
+  context "with invalid authentication", vcr: { cassette_name: "wrong_auth" } do
 
     context "bad basic auth" do
       let(:basic_auth) { { username: "WRONG", password: "WRONG" } }
 
       it "raises a NotAuthorizedError" do
-        expect { client.find_listing_by_sku("ASKU") }
+        expect { client.find_listing_by_sku("THESKU") }
           .to raise_error Reverb::Api::NotAuthorizedError, "Reverb authorization failed. Please check your X-Auth-Token header."
       end
     end
@@ -36,7 +36,7 @@ describe Reverb::Api::Client, vcr: true do
       let(:reverb_token) { "bad_token" }
 
       it "raises a NotAuthorizedError" do
-        expect { client.find_listing_by_sku("ASKU") }
+        expect { client.find_listing_by_sku("THESKU") }
           .to raise_error Reverb::Api::NotAuthorizedError, "Please log in to view your listings."
       end
 
@@ -56,7 +56,7 @@ describe Reverb::Api::Client, vcr: true do
         client.create_listing({
           make: "Fender",
           model: "Stratocaster",
-          sku: "ASKU"
+          sku: "THESKU"
         }).code.should == 201
       end
     end
@@ -64,7 +64,7 @@ describe Reverb::Api::Client, vcr: true do
     describe "#find_listing_by_sku", vcr: { cassette_name: "find_listing_by_sku" } do
 
       context "the sku is found on reverb" do
-        let(:listing) { client.find_listing_by_sku("ASKU") }
+        let(:listing) { client.find_listing_by_sku("THESKU") }
 
         it "finds the correct item" do
           listing.make.should == "Fender"
@@ -81,19 +81,46 @@ describe Reverb::Api::Client, vcr: true do
       end
     end
 
+    describe "#find_draft", vcr: { cassette_name: "find_draft" } do
+
+      context "the sku is found on reverb" do
+        let(:listing) { client.find_draft("THESKU") }
+
+        it "finds the correct item" do
+          listing.make.should == "Fender"
+          listing.model.should == "Stratocaster"
+        end
+      end
+
+      context "the sku is not found on reverb" do
+        let(:listing) { client.find_draft("NOSKU") }
+
+        it "is nil" do
+          listing.should === nil
+        end
+      end
+    end
+
     describe "updating listing", vcr: { cassette_name: "update_listing" } do
-      let(:listing) { client.find_listing_by_sku("ASKU") }
+      let(:listing) { client.find_listing_by_sku("THESKU") }
 
       it "updates" do
         listing.update(title: "new title")
 
         # This test can fail because there is an undefined amount of time before
         # the update above is represented in the search below (due to ElasticSearch)
-        client.find_listing_by_sku("ASKU").title.should == "new title"
+        client.find_listing_by_sku("THESKU").title.should == "new title"
       end
     end
 
     describe "#create_webhook", vcr: { cassette_name: "create_webhook" } do
+      before do
+        hook = client.webhooks["registrations"].find { |hook| hook["url"] == "http://requestb.in/1etnuhm1" }
+        if hook
+          client.delete(hook["_links"]["self"]["href"], {})
+        end
+      end
+
       specify do
         client.create_webhook(url: "http://requestb.in/1etnuhm1", topic: "listings/update")
           .code.should == 201
@@ -101,7 +128,7 @@ describe Reverb::Api::Client, vcr: true do
     end
 
     describe "#webhooks", vcr: { cassette_name: "get_webhooks" } do
-      subject(:registered_webhook) { client.webhooks["registrations"].first }
+      subject(:registered_webhook) { client.webhooks["registrations"].find { |hook| hook["url"] == "http://requestb.in/1etnuhm1" } }
 
       it "gets registered webhooks" do
         subject["url"].should == "http://requestb.in/1etnuhm1"
