@@ -33,6 +33,15 @@ module Reverb
         end
       end
 
+      def find_draft(sku)
+        listing_attributes =  get("/api/my/listings?sku=#{URI.encode(sku)}&state=draft")["listings"].first
+        if listing_attributes
+          Listing.new(client: self, listing_attributes: listing_attributes)
+        else
+          nil
+        end
+      end
+
       def create_webhook(url:, topic:)
         post("/api/webhooks/registrations", url: url, topic: topic)
       end
