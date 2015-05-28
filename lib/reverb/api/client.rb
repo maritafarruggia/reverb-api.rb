@@ -61,7 +61,7 @@ module Reverb
       attr_reader :basic_auth, :reverb_token, :reverb_url
 
       def find_by_sku(sku, state)
-        listing_attributes =  get("/api/my/listings?sku=#{URI.encode(sku)}&state=#{state}")["listings"].first
+        listing_attributes =  get("/api/my/listings?sku=#{CGI.escape(sku)}&state=#{state}")["listings"].first
         if listing_attributes
           Listing.new(client: self, listing_attributes: listing_attributes)
         else
