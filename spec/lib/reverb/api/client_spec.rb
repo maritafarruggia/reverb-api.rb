@@ -61,7 +61,7 @@ describe Reverb::Api::Client, vcr: true do
       end
     end
 
-    describe "#find_listing_by_sku", vcr: { cassette_name: "find_listing_by_sku" } do
+    describe "#find_listing_by_sku", vcr: { cassette_name: "find_listing_by_sku", record: :new_episodes } do
 
       context "the sku is found on reverb" do
         let(:listing) { client.find_listing_by_sku("THESKU") }
@@ -77,6 +77,22 @@ describe Reverb::Api::Client, vcr: true do
 
         it "is nil" do
           listing.should === nil
+        end
+      end
+
+      context "the sku contains a plus" do
+        before do
+          client.create_listing({
+            make: "Fender",
+            model: "Stratocaster",
+            sku: "THE+SKU"
+          })
+        end
+
+        let(:listing) { client.find_listing_by_sku("THE+SKU") }
+
+        it "still finds listing" do
+          listing.should be_truthy
         end
       end
     end
