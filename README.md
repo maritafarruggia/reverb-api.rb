@@ -33,6 +33,15 @@ Examples:
     client.create_listing make: "Fender", model: "Precision Bass", sku: "THE_SKU"
     client.find_listing_by_sku "THE_SKU"
 
+## Console
+
+You can play with the API from a console
+
+```
+script/console
+> Reverb::Api::Client.new(reverb_token: "foo")
+```
+
 ## Testing
 
 The specs make real requests against Reverb's sandbox server which requires secret
