@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'reverb/api'
+require 'webmock/rspec'
 require 'vcr'
 
 RSpec.configure do |config|
