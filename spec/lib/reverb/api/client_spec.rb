@@ -151,5 +151,19 @@ describe Reverb::Api::Client, vcr: true do
         subject["topic"].should == "listings/update"
       end
     end
+
+    describe "adding headers" do
+
+      before do
+        Reverb::Api::Client.add_default_header({"User-Agent" => "An-Agent" })
+        stub_request(:get, "https://#{basic_auth[:username]}:#{basic_auth[:password]}@sandbox.reverb.com/api/webhooks/registrations")
+        client.webhooks
+      end
+
+      it "adds headers to requests" do
+        WebMock.should have_requested(:get, "https://#{basic_auth[:username]}:#{basic_auth[:password]}@sandbox.reverb.com/api/webhooks/registrations").
+          with(headers: { "User-Agent" => "An-Agent" })
+      end
+    end
   end
 end
