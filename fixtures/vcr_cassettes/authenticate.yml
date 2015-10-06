@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox.reverb.com/api/auth/email
+    body:
+      encoding: UTF-8
+      string: '{"email":"foobar@foobar.com","password":"foobar123"}'
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - mangled_token
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/hal+json
+      Date:
+      - Tue, 06 Oct 2015 18:18:23 GMT
+      Etag:
+      - '"b34bc4dddf3122c360f72cd56434d159"'
+      Server:
+      - nginx
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Version
+      X-Request-Id:
+      - a5dc79f9-beb0-40be-b3e8-cfc543e12583
+      X-Revision:
+      - fda6d910fe5754c2129bb9368ea10ed75fae50b3
+      X-Runtime:
+      - '0.148926'
+      Content-Length:
+      - '2161'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"accounts":{"href":"/api/accounts"},"auth_email":{"href":"/api/auth/email"},"auth_facebook":{"href":"/api/auth/facebook"},"auth":{"forgot_password":{"href":"/api/auth/forgot_password"},"logout":{"href":"/api/auth/logout"}},"autocomplete":{"href":"/api/autocomplete"},"autosuggest":{"href":"/api/autosuggest"},"braintree":{"client_token":{"href":"/api/braintree/client_token"}},"collections":{"href":"/api/collections"},"categories":{"href":"/api/categories"},"listings":{"href":"/api/listings"},"price_guides":{"href":"/api/priceguide"},"my":{"requires_login":true,"account":{"href":"/api/my/account"},"counts":{"href":"/api/my/counts"},"feed":{"href":"/api/my/feed"},"feedback":{"sent":{"href":"/api/my/feedback/sent"},"received":{"href":"/api/my/feedback/received"}},"follows":{"href":"/api/my/follows"},"conversations":{"href":"/api/my/conversations"},"recently_viewed":{"href":"/api/my/viewed_listings"},"lists":{"href":"/api/my/lists"},"listings":{"href":"/api/my/listings"},"drafts":{"href":"/api/my/listings/drafts"},"negotiations":{"buying":{"href":"/api/my/negotiations/buying"},"selling":{"href":"/api/my/listings/negotiations"}},"messages":{"web":{"href":"/my/messages"}},"orders":{"buying":{"all":{"href":"/api/my/orders/buying/all"},"unpaid":{"href":"/api/my/orders/buying/unpaid"}},"selling":{"all":{"href":"/api/my/orders/selling/all"},"unpaid":{"href":"/api/my/orders/selling/unpaid"},"awaiting_shipment":{"href":"/api/my/orders/selling/awaiting_shipment"}},"awaiting_feedback":{"href":"/api/my/orders/awaiting_feedback"}}},"shop":{"href":"/api/shop","payment_methods":{"href":"/api/shop/payment_methods"}},"terms_and_conditions":{"web":{"href":"/page/terms"}},"wants":{"requires_login":true,"href":"/api/wants"},"push_notifications":{"registrations":{"href":"/api/push_notifications/registrations"}},"shipping":{"regions":{"href":"/api/shipping/regions"},"providers":{"href":"/api/shipping/providers"}}},"token":"1962267fb20069da9223dba1aa109754382f9228cc528401ea13d97cd6c961b8d331db5183452201cc36b5ba21810c1e1393276c86ece702a78c6f2c05ac5f25","paypal_email":"reuben.vonrueden@moriette.org","location":{"locality":null,"region":null}}'
+    http_version: 
+  recorded_at: Tue, 06 Oct 2015 18:18:23 GMT
+recorded_with: VCR 2.9.3

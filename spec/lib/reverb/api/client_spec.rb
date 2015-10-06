@@ -3,40 +3,23 @@ require 'spec_helper'
 describe Reverb::Api::Client, vcr: true do
   let(:client) do
     described_class.new(
-      basic_auth: basic_auth,
       reverb_token: reverb_token,
       url: url
     )
   end
 
-  let(:basic_auth) do
-    {
-      username: ENV["REVERB_SANDBOX_USERNAME"],
-      password: ENV["REVERB_SANDBOX_PASSWORD"]
-    }
-  end
-
-  let(:email) { "exampleuser@gmail.com" }
-  let(:password) { "password" }
-  let(:reverb_token) { ENV["REVERB_TEST_API_TOKEN"] }
+  let(:email) { "foobar@foobar.com" }
+  let(:password) { "foobar123" }
+  let(:reverb_token) { "mangled_token" }
   let(:url) { "https://sandbox.reverb.com" }
 
   context "with invalid authentication", vcr: { cassette_name: "wrong_auth" } do
-
-    context "bad basic auth" do
-      let(:basic_auth) { { username: "WRONG", password: "WRONG" } }
-
-      it "raises a NotAuthorizedError" do
-        expect { client.find_listing_by_sku("THESKU") }
-          .to raise_error Reverb::Api::NotAuthorizedError, "Reverb authorization failed. Please check your X-Auth-Token header."
-      end
-    end
 
     context "bad api token" do
       let(:reverb_token) { "bad_token" }
 
       it "raises a NotAuthorizedError" do
-        expect { client.find_listing_by_sku("THESKU") }
+        expect { client.find_listing_by_sku("THETESTSKU") }
           .to raise_error Reverb::Api::NotAuthorizedError, "Please log in to view your listings."
       end
 
@@ -51,12 +34,12 @@ describe Reverb::Api::Client, vcr: true do
       end
     end
 
-    describe "#create_listing", vcr: { cassette_name: "create_listing" } do
+    describe "#create_listing", vcr: { cassette_name: "create_listing", record: :none} do
       specify do
         client.create_listing({
           make: "Fender",
           model: "Stratocaster",
-          sku: "THESKU"
+          sku: "TESTSKU1234"
         }).code.should == 201
       end
     end
@@ -64,7 +47,7 @@ describe Reverb::Api::Client, vcr: true do
     describe "#find_listing_by_sku", vcr: { cassette_name: "find_listing_by_sku", record: :new_episodes } do
 
       context "the sku is found on reverb" do
-        let(:listing) { client.find_listing_by_sku("THESKU") }
+        let(:listing) { client.find_listing_by_sku("THETESTSKU") }
 
         it "finds the correct item" do
           listing.make.should == "Fender"
@@ -100,7 +83,7 @@ describe Reverb::Api::Client, vcr: true do
     describe "#find_draft", vcr: { cassette_name: "find_draft" } do
 
       context "the sku is found on reverb" do
-        let(:listing) { client.find_draft("THESKU") }
+        let(:listing) { client.find_draft("THETESTSKU") }
 
         it "finds the correct item" do
           listing.make.should == "Fender"
@@ -108,7 +91,7 @@ describe Reverb::Api::Client, vcr: true do
         end
       end
 
-      context "the sku is not found on reverb" do
+      context "the sku is not found on reverb", vcr: { record: :none} do
         let(:listing) { client.find_draft("NOSKU") }
 
         it "is nil" do
@@ -118,14 +101,14 @@ describe Reverb::Api::Client, vcr: true do
     end
 
     describe "updating listing", vcr: { cassette_name: "update_listing" } do
-      let(:listing) { client.find_listing_by_sku("THESKU") }
+      let(:listing) { client.find_listing_by_sku("THETESTSKU") }
 
       it "updates" do
         listing.update(title: "new title")
 
         # This test can fail because there is an undefined amount of time before
         # the update above is represented in the search below (due to ElasticSearch)
-        client.find_listing_by_sku("THESKU").title.should == "new title"
+        client.find_listing_by_sku("THETESTSKU").title.should == "new title"
       end
     end
 
@@ -153,15 +136,14 @@ describe Reverb::Api::Client, vcr: true do
     end
 
     describe "adding headers" do
-
       before do
-        Reverb::Api::Client.add_default_header({"User-Agent" => "An-Agent" })
-        stub_request(:get, "https://#{basic_auth[:username]}:#{basic_auth[:password]}@sandbox.reverb.com/api/webhooks/registrations")
+        stub_request(:get, "https://sandbox.reverb.com/api/webhooks/registrations")
+        client.add_default_header({"User-Agent" => "An-Agent" })
         client.webhooks
       end
 
       it "adds headers to requests" do
-        WebMock.should have_requested(:get, "https://#{basic_auth[:username]}:#{basic_auth[:password]}@sandbox.reverb.com/api/webhooks/registrations").
+        WebMock.should have_requested(:get, "https://sandbox.reverb.com/api/webhooks/registrations").
           with(headers: { "User-Agent" => "An-Agent" })
       end
     end

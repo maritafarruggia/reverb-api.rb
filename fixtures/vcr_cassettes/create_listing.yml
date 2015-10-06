@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox.reverb.com/api/listings
+    body:
+      encoding: UTF-8
+      string: '{"make":"Fender","model":"Stratocaster","sku":"TESTSKU1234"}'
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - mangled_token
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/hal+json
+      Date:
+      - Tue, 06 Oct 2015 18:21:59 GMT
+      Etag:
+      - '"caa5698c7cc87847b2972e4d35fbeeb0"'
+      Server:
+      - nginx
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Version
+      X-Request-Id:
+      - 12d9530d-dcef-4732-9e22-5f527d6237dd
+      X-Revision:
+      - fda6d910fe5754c2129bb9368ea10ed75fae50b3
+      X-Runtime:
+      - '0.086944'
+      Content-Length:
+      - '2370'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"message":"Your draft listing has been created. You can come back
+        and finish it up here, or on the web.","listing":{"make":"Fender","model":"Stratocaster","finish":"","title":"Fender
+        Stratocaster","created_at":"2015-10-06T13:21:59-05:00","offers_enabled":true,"_links":{"photo":{"href":"https://da1wmtc5ur1xq.cloudfront.net/assets/products/blank_medium-19ba00051c336ac75f04e103a1ae310b.jpg"},"self":{"href":"/api/listings/14611-fender-stratocaster"},"update":{"method":"PUT","href":"/api/listings/14611-fender-stratocaster"},"end":{"method":"PUT","href":"/api/my/listings/14611-fender-stratocaster/state/end"},"want":{"method":"PUT","href":"/api/wants/14611-fender-stratocaster"},"unwant":{"method":"DELETE","href":"/api/wants/14611-fender-stratocaster"},"edit":{"href":"/api/listings/14611-fender-stratocaster/edit"},"web":{"href":"https://sandbox.reverb.com/item/14611-fender-stratocaster"},"make_offer":{"method":"POST","href":"/api/listings/14611-fender-stratocaster/offer"},"add_to_wishlist":{"method":"POST","href":"/api/my/wishlist/14611-fender-stratocaster"},"remove_from_wishlist":{"method":"DELETE","href":"/api/my/wishlist/14611-fender-stratocaster"},"buy":{"href":"https://sandbox.reverb.com/cart/add?cart_item%5Baction_source_attributes%5D%5Bdevice%5D=\u0026cart_item%5Bproduct_id%5D=14611"},"flag":{"href":"/api/listings/14611-fender-stratocaster/flag"},"contact_seller":{"web":{"href":"https://sandbox.reverb.com/my/messages/new?item=14611-fender-stratocaster\u0026to=1-audrey-l"}},"conversations":{"href":"/api/listings/14611/conversations"},"shop":{"href":"/api/shops/audreys-gear-bazaar","web":{"href":"https://sandbox.reverb.com/shop/audreys-gear-bazaar"}}},"accepted_payment_methods":[],"location":{"country_code":null,"locality":null,"region":null},"has_inventory":false,"draft":true,"live":false,"cloudinary_photos":[],"shop":{"feedback_count":2,"preferred_seller":false,"rating_percentage":0.6},"stats":{"views":0,"watches":0},"offer_count":0,"shipping_policy":"I
+        will ship with tracking to the continental United States. Alaska, Hawaii,
+        and international shipments may incur additional charges.","payment_policy":"To
+        negotiate price, shipping, or payment options, please send a message or make
+        an offer.","is_my_listing":false,"photos":[],"shipping":{"us":false,"rates":[]},"seller":{"paypal_email":"reuben.vonrueden@moriette.org"}},"errors":{}}'
+    http_version: 
+  recorded_at: Tue, 06 Oct 2015 18:21:58 GMT
+recorded_with: VCR 2.9.3

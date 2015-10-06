@@ -8,22 +8,21 @@ module Reverb
         "Accept" => "application/hal+json"
       }
 
-      class << self
-        def headers
-          @headers ||= HEADERS.dup
-        end
+      def default_headers
+        @headers ||= HEADERS.dup
+      end
 
-        def add_default_header(header)
-          @headers = headers.merge(header)
-        end
+      def add_default_header(header)
+        default_headers.merge!(header)
       end
 
       # url: Base URL of the Reverb API (e.g.: https://reverb.com)
       # basic_auth: optional basic auth for hitting Reverb Sandbox URLs
-      def initialize(reverb_token: nil, url: "https://reverb.com", basic_auth: nil)
+      def initialize(reverb_token: nil, url: "https://reverb.com", basic_auth: nil, headers:{})
         @reverb_token = reverb_token
         @reverb_url = url
         @basic_auth = basic_auth
+        default_headers.merge!(headers)
       end
 
       def authenticate(email, password)
@@ -110,7 +109,7 @@ module Reverb
 
 
       def default_options
-        headers = self.class.headers
+        headers = default_headers.dup
 
         # HTTParty really hates nil headers. It will die horribly
         # inside of net/http with no explanation.
@@ -122,7 +121,6 @@ module Reverb
           verify: false
         }
       end
-
     end
   end
 end

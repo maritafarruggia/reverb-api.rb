@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox.reverb.com/api/my/listings?sku=THETESTSKU&state=all
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - mangled_token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/hal+json
+      Date:
+      - Tue, 06 Oct 2015 18:18:26 GMT
+      Etag:
+      - '"f55ed91215805e381a8ddbeee9dec568"'
+      Server:
+      - nginx
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Version
+      X-Request-Id:
+      - 79d1a787-c16e-4b69-96f2-8c35db783713
+      X-Revision:
+      - fda6d910fe5754c2129bb9368ea10ed75fae50b3
+      X-Runtime:
+      - '0.033073'
+      Content-Length:
+      - '1206'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"total":1,"_links":{},"listings":[{"make":"Fender","model":"Stratocaster","finish":"","title":"new
+        title","created_at":"2015-10-06T13:17:06-05:00","shop_name":"Audrey''s Gear
+        Bazaar","price":{"amount":"0.00","currency":"USD","symbol":"$"},"offers_enabled":true,"_links":{"photo":{"href":"https://reverb-res.cloudinary.com/image/upload/a_exif,c_thumb,f_auto,fl_progressive,g_south,h_640,q_85,w_640/v1/v/."},"self":{"href":"/api/listings/14609-new-title"},"update":{"method":"PUT","href":"/api/listings/14609-new-title"},"end":{"method":"PUT","href":"/api/my/listings/14609-new-title/state/end"},"want":{"method":"PUT","href":"/api/wants/14609-new-title"},"unwant":{"method":"DELETE","href":"/api/wants/14609-new-title"},"edit":{"href":"/api/listings/14609-new-title/edit"},"web":{"href":"https://sandbox.reverb.com/item/14609-new-title"},"make_offer":{"method":"POST","href":"/api/listings/14609-new-title/offer"},"add_to_wishlist":{"method":"POST","href":"/api/my/wishlist/14609-new-title"},"remove_from_wishlist":{"method":"DELETE","href":"/api/my/wishlist/14609-new-title"}},"shipping":{"local":false,"us":false,"us_rate":{"amount":"0.00","currency":"USD","symbol":"$"}},"photos":[],"sku":"THETESTSKU"}]}'
+    http_version: 
+  recorded_at: Tue, 06 Oct 2015 18:18:25 GMT
+- request:
+    method: put
+    uri: https://sandbox.reverb.com/api/listings/14609-new-title
+    body:
+      encoding: UTF-8
+      string: '{"title":"new title"}'
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - mangled_token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/hal+json
+      Date:
+      - Tue, 06 Oct 2015 18:18:26 GMT
+      Etag:
+      - '"61b7673a517867ca6248a5cc32857e27"'
+      Server:
+      - nginx
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Version
+      X-Request-Id:
+      - afed2991-d0c1-4725-aacf-4f3773af1b2d
+      X-Revision:
+      - fda6d910fe5754c2129bb9368ea10ed75fae50b3
+      X-Runtime:
+      - '0.080265'
+      Content-Length:
+      - '2267'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"message":"Your draft listing has been saved. You can come back to
+        finish it when you''re ready.","listing":{"make":"Fender","model":"Stratocaster","finish":"","title":"new
+        title","created_at":"2015-10-06T13:17:06-05:00","shop_name":"Audrey''s Gear
+        Bazaar","offers_enabled":true,"_links":{"photo":{"href":"https://da1wmtc5ur1xq.cloudfront.net/assets/products/blank_medium-19ba00051c336ac75f04e103a1ae310b.jpg"},"self":{"href":"/api/listings/14609-new-title"},"update":{"method":"PUT","href":"/api/listings/14609-new-title"},"end":{"method":"PUT","href":"/api/my/listings/14609-new-title/state/end"},"want":{"method":"PUT","href":"/api/wants/14609-new-title"},"unwant":{"method":"DELETE","href":"/api/wants/14609-new-title"},"edit":{"href":"/api/listings/14609-new-title/edit"},"web":{"href":"https://sandbox.reverb.com/item/14609-new-title"},"make_offer":{"method":"POST","href":"/api/listings/14609-new-title/offer"},"add_to_wishlist":{"method":"POST","href":"/api/my/wishlist/14609-new-title"},"remove_from_wishlist":{"method":"DELETE","href":"/api/my/wishlist/14609-new-title"},"buy":{"href":"https://sandbox.reverb.com/cart/add?cart_item%5Baction_source_attributes%5D%5Bdevice%5D=\u0026cart_item%5Bproduct_id%5D=14609"},"flag":{"href":"/api/listings/14609-new-title/flag"},"contact_seller":{"web":{"href":"https://sandbox.reverb.com/my/messages/new?item=14609-new-title\u0026to=1-audrey-l"}},"conversations":{"href":"/api/listings/14609/conversations"},"shop":{"href":"/api/shops/audreys-gear-bazaar","web":{"href":"https://sandbox.reverb.com/shop/audreys-gear-bazaar"}}},"accepted_payment_methods":[],"location":{"country_code":null,"locality":null,"region":null},"has_inventory":false,"draft":true,"live":false,"cloudinary_photos":[],"shop":{"feedback_count":2,"preferred_seller":false,"rating_percentage":0.6},"stats":{"views":0,"watches":0},"offer_count":0,"shipping_policy":"I
+        will ship with tracking to the continental United States. Alaska, Hawaii,
+        and international shipments may incur additional charges.","payment_policy":"To
+        negotiate price, shipping, or payment options, please send a message or make
+        an offer.","is_my_listing":false,"photos":[],"shipping":{"us":false,"rates":[]},"seller":{"paypal_email":"reuben.vonrueden@moriette.org"}},"errors":{}}'
+    http_version: 
+  recorded_at: Tue, 06 Oct 2015 18:18:26 GMT
+- request:
+    method: get
+    uri: https://sandbox.reverb.com/api/my/listings?sku=THETESTSKU&state=all
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - mangled_token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/hal+json
+      Date:
+      - Tue, 06 Oct 2015 18:18:26 GMT
+      Etag:
+      - '"f55ed91215805e381a8ddbeee9dec568"'
+      Server:
+      - nginx
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Version
+      X-Request-Id:
+      - 162c1642-ec8c-450c-acd8-efcfedb990f3
+      X-Revision:
+      - fda6d910fe5754c2129bb9368ea10ed75fae50b3
+      X-Runtime:
+      - '0.032777'
+      Content-Length:
+      - '1206'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"total":1,"_links":{},"listings":[{"make":"Fender","model":"Stratocaster","finish":"","title":"new
+        title","created_at":"2015-10-06T13:17:06-05:00","shop_name":"Audrey''s Gear
+        Bazaar","price":{"amount":"0.00","currency":"USD","symbol":"$"},"offers_enabled":true,"_links":{"photo":{"href":"https://reverb-res.cloudinary.com/image/upload/a_exif,c_thumb,f_auto,fl_progressive,g_south,h_640,q_85,w_640/v1/v/."},"self":{"href":"/api/listings/14609-new-title"},"update":{"method":"PUT","href":"/api/listings/14609-new-title"},"end":{"method":"PUT","href":"/api/my/listings/14609-new-title/state/end"},"want":{"method":"PUT","href":"/api/wants/14609-new-title"},"unwant":{"method":"DELETE","href":"/api/wants/14609-new-title"},"edit":{"href":"/api/listings/14609-new-title/edit"},"web":{"href":"https://sandbox.reverb.com/item/14609-new-title"},"make_offer":{"method":"POST","href":"/api/listings/14609-new-title/offer"},"add_to_wishlist":{"method":"POST","href":"/api/my/wishlist/14609-new-title"},"remove_from_wishlist":{"method":"DELETE","href":"/api/my/wishlist/14609-new-title"}},"shipping":{"local":false,"us":false,"us_rate":{"amount":"0.00","currency":"USD","symbol":"$"}},"photos":[],"sku":"THETESTSKU"}]}'
+    http_version: 
+  recorded_at: Tue, 06 Oct 2015 18:18:26 GMT
+recorded_with: VCR 2.9.3

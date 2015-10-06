@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox.reverb.com/api/my/listings?sku=THETESTSKU&state=all
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - bad_token
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/hal+json
+      Date:
+      - Tue, 06 Oct 2015 18:18:23 GMT
+      Server:
+      - nginx
+      Status:
+      - 401 Unauthorized
+      X-Request-Id:
+      - 6291593e-b3d4-4d4b-9106-dad6547555c3
+      X-Revision:
+      - fda6d910fe5754c2129bb9368ea10ed75fae50b3
+      X-Runtime:
+      - '0.018961'
+      Content-Length:
+      - '316'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"message":"Please log in to view your listings.","details":"Invalid
+        token. Please re-authenticate to obtain X-Auth-Token header.","_links":{"email_auth":{"templated":true,"href":"/api/auth/email{?email,password}","method":"POST"},"fb_auth":{"templated":true,"href":"/api/auth/facebook{?fb_token}","method":"POST"}}}'
+    http_version: 
+  recorded_at: Tue, 06 Oct 2015 18:18:23 GMT
+recorded_with: VCR 2.9.3
