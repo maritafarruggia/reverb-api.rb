@@ -2,7 +2,9 @@ require "httparty"
 
 module Reverb
   module Api
+    class ServiceDown < RuntimeError; end
     class Client
+
       HEADERS = {
         "Content-Type" => "application/hal+json",
         "Accept" => "application/hal+json"
@@ -92,6 +94,7 @@ module Reverb
       end
 
       def handle_response(response)
+        raise ServiceDown if response.code == 503
         raise Reverb::Api::NotAuthorizedError.new(response.parsed_response["message"]) unless authorized?(response)
         response
       end

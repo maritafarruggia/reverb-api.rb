@@ -13,6 +13,14 @@ describe Reverb::Api::Client, vcr: true do
   let(:reverb_token) { "mangled_token" }
   let(:url) { "https://sandbox.reverb.com" }
 
+  context "service is down", vcr: { cassette_name: "service_down" } do
+    let(:url) { "https://reverb.com" }
+    it "raises a NotAuthorizedError" do
+      expect { client.find_listing_by_sku("THETESTSKU") }
+        .to raise_error Reverb::Api::ServiceDown
+    end
+  end
+
   context "with invalid authentication", vcr: { cassette_name: "wrong_auth" } do
 
     context "bad api token" do

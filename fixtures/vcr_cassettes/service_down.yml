@@ -1,0 +1,41 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://reverb.com/api/my/listings?sku=THETESTSKU&state=all
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/hal+json
+      Accept:
+      - application/hal+json
+      X-Auth-Token:
+      - mangled_token
+  response:
+    status:
+      code: 503
+      message: Service Temporarily Unavailable
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 26 Jan 2016 10:16:16 GMT
+      Etag:
+      - '"56a740c0-3d"'
+      Server:
+      - nginx
+      Content-Length:
+      - '61'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |2
+            {
+              "message":"Reverb's down for tuning. BRB!"
+            }
+    http_version: 
+  recorded_at: Tue, 26 Jan 2016 10:16:16 GMT
+recorded_with: VCR 2.9.3
