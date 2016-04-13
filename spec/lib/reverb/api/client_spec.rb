@@ -155,5 +155,48 @@ describe Reverb::Api::Client, vcr: true do
           with(headers: { "User-Agent" => "An-Agent" })
       end
     end
+
+    describe 'specifying oauth_token' do
+      let(:oauth_token) { 'oauth_token' }
+
+      let(:client) do
+        described_class.new(
+          oauth_token: oauth_token,
+          url: url
+        )
+      end
+
+      before do
+        stub_request(:get, "https://sandbox.reverb.com/api/webhooks/registrations")
+        client.webhooks
+      end
+
+      it "adds the Bearer token to the request" do
+        WebMock.should have_requested(:get, "https://sandbox.reverb.com/api/webhooks/registrations").
+          with(headers: { "Authorization" => "Bearer #{oauth_token}" })
+      end
+
+    end
+
+    describe 'specifying api version' do
+      let(:api_version) { '3.0' }
+      let(:client) do
+        described_class.new(
+          url: url,
+          api_version: api_version
+        )
+      end
+
+      before do
+        stub_request(:get, "https://sandbox.reverb.com/api/webhooks/registrations")
+        client.webhooks
+      end
+
+      it "puts the Accept-Version in the header" do
+        WebMock.should have_requested(:get, "https://sandbox.reverb.com/api/webhooks/registrations").
+          with(headers: { "Accept-Version" => api_version })
+      end
+
+    end
   end
 end
