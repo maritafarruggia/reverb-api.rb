@@ -196,6 +196,33 @@ describe Reverb::Api::Client, vcr: true do
         WebMock.should have_requested(:get, "https://sandbox.reverb.com/api/webhooks/registrations").
           with(headers: { "Accept-Version" => api_version })
       end
+    end
+
+    context 'with full urls' do
+      let(:full_url) { "https://api.reverb.com/api/resource" }
+
+      before do
+        stub_request(:get, full_url)
+        client.get(full_url)
+      end
+
+      it 'does not try to append the url' do
+        WebMock.should have_requested(:get, full_url)
+      end
+    end
+
+    context 'with relative urls' do
+      let(:relative_url) { "/api/resource" }
+      let(:full_url) { "https://sandbox.reverb.com#{relative_url}" }
+
+      before do
+        stub_request(:get, full_url)
+        client.get(relative_url)
+      end
+
+      it 'does not try to append the url' do
+        WebMock.should have_requested(:get, full_url)
+      end
 
     end
   end

@@ -97,7 +97,11 @@ module Reverb
       end
 
       def url(path)
-        File.join(reverb_url, path)
+        if URI.parse(path).hostname
+          path
+        else
+          File.join(reverb_url, path)
+        end
       end
 
       def handle_response(response)
