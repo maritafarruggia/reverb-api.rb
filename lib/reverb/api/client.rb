@@ -62,8 +62,8 @@ module Reverb
         handle_response HTTParty.post(url(path), with_defaults(params))
       end
 
-      def get(path)
-        handle_response HTTParty.get(url(path), default_options)
+      def get(path, params={})
+        handle_response HTTParty.get(url(path), with_defaults(params))
       end
 
       def put(path, params)
