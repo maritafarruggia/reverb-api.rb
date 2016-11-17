@@ -7,7 +7,7 @@ An ruby gem to interact with the Reverb api.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'reverb-api'
+gem 'reverb-api', require: "reverb/api"
 ```
 
 And then execute:
