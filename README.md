@@ -28,7 +28,7 @@ the path manually.
 
 Examples:
 
-    client = Reverb::Api::Client.new(reverb_token: 'MY_TOKEN')
+    client = Reverb::Api::Client.new(oauth_token: 'MY_TOKEN')
 
     client.create_listing make: "Fender", model: "Precision Bass", sku: "THE_SKU"
     client.find_listing_by_sku "THE_SKU"
@@ -39,7 +39,7 @@ You can play with the API from a console
 
 ```
 script/console
-> Reverb::Api::Client.new(reverb_token: "foo")
+> Reverb::Api::Client.new(oauth_token: "foo")
 ```
 
 ## Testing
